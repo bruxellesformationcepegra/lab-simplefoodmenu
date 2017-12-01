@@ -15,7 +15,11 @@
 
   </head>
   <body>
-    <div class="overlay"><img src="img/loading.gif"/></div>
+    <main id="app">
+    <transition name="fade">
+      <div class="overlay" v-if="!isLoaded"><img src="img/loading.gif"/></div>
+    </transition>
+
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -27,31 +31,29 @@
                     <th>Quantity</th>
                     <th></th>
                 </tr>
-                <!-- 
-                    <tr data-price="0" data-quantity="0">
+                    <tr v-for="meal in meals">
                         <td>
-                            <strong>Super buger</strong>
-                                &nbsp;<img src="img/vege-icon.png">
-                            <p>Super description/p>
+                            <strong>{{meal.name}}</strong>
+                            <span v-if="meal.veggie">&nbsp;<img src="img/vege-icon.png"></span>
+                            <p>{{meal.description}}</p>
                         </td>
                         <td>
-                            <span class="price"><strong>0 €</strong></span>
+                            <span class="price"><strong>{{meal.price}} €</strong></span>
                         </td>
-                        <td class="quantity">0</td>
+                        <td class="quantity">{{meal.quantity}}</td>
                         <td>
-                            <button class="btn btn-primary more">+</button>
-                            <button class="btn btn-primary less">-</button>
+                            <button class="btn btn-primary more" @click="add(meal)">+</button>
+                            <button class="btn btn-primary less" @click="remove(meal)">-</button>
                         </td>
                     </tr>
-                -->
                 <tr class="info" data-price="0" data-quantity="0">
                      <td>
                         <strong>Total</strong>
                      </td>
                      <td>
-                        <span class="price"><strong>0 €</strong></span>
+                        <span class="price"><strong>{{totalPrice}} €</strong></span>
                     </td>
-                    <td class="quantity">0</td>
+                    <td class="quantity">{{totalQuantity}}</td>
                     <td>
                     </td>
                 </tr>
@@ -59,10 +61,9 @@
 		</div>
 	</div>
 </div>
-
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    </main>
+    <script src="https://unpkg.com/vue"></script>
     <script src="js/scripts.js"></script>
+
   </body>
 </html>
